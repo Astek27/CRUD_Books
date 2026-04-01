@@ -1,0 +1,14 @@
+from sqlalchemy.orm import Session
+
+from app.models import Book
+
+
+def is_book_in_base(db: Session, name: str, author: str) -> bool:
+    return db.query(Book).filter(Book.name == name, Book.author == author).first() is not None
+
+
+def add_book(db: Session, name: str, author: str) -> Book:
+    book = Book(name=name, author=author)
+    db.add(book)
+    db.flush()
+    return book
