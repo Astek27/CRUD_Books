@@ -12,3 +12,8 @@ def add_book(db: Session, name: str, author: str) -> Book:
     db.add(book)
     db.flush()
     return book
+
+
+def get_all_books(db: Session) -> list[Book]:
+    return db.query(Book).all()
+

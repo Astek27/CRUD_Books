@@ -12,3 +12,9 @@ def add_book(db: Session, book: CreateBook) -> BookResponse:
     book = books_repo.add_book(db, name=book.name, author=book.author)
     db.commit()
     return BookResponse.model_validate(book)
+
+
+def get_all_books(db: Session) -> list[BookResponse]:
+    books = books_repo.get_all_books(db)
+    books = [BookResponse.model_validate(book) for book in books]
+    return books
