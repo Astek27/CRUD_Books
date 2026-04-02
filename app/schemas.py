@@ -24,3 +24,17 @@ class BookResponse(CreateBook):
     model_config = {'from_attributes': True}
     
     id: int
+
+
+class CreateUser(BaseModel):
+    login: str = Field(..., max_length=30)
+
+    @field_validator('login')
+    def validate_login(cls, v: str):
+        if ' ' in v:
+            raise ValueError('Not space simbol')
+        return v
+
+class UserResponse(CreateUser):
+    model_config = {'from_attributes': True}
+    id: int
