@@ -16,7 +16,8 @@ def add_book_for_user(db: Session, user_id: int, book_id: int) -> UsersBooks:
         UsersBooks.book_id == book_id
     ).scalar()
     if book:
-        return HTTPException(status_code=400, detail="Book already added for user")
+        raise HTTPException(status_code=400, detail="Book already added for user")
     new_user_book = UsersBooks(user_id=user_id, book_id=book_id)
     db.add(new_user_book)
+    db.flush()
     return new_user_book
