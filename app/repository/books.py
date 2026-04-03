@@ -17,3 +17,6 @@ def add_book(db: Session, name: str, author: str) -> Book:
 def get_all_books(db: Session) -> list[Book]:
     return db.query(Book).all()
 
+def get_book_by_id(db: Session, book_id: int) -> Book | None:
+    return db.query(Book).filter(Book.id == book_id).first()
+

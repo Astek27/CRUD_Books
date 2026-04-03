@@ -14,6 +14,12 @@ def add_book(db: Session, book: CreateBook) -> BookResponse:
     return BookResponse.model_validate(book)
 
 
+def get_book_by_id(db: Session, book_id: int) -> BookResponse:
+    book = books_repo.get_book_by_id(db, book_id)
+    if not book:
+        raise HTTPException(status_code=404, detail='Book not found')
+    return BookResponse.model_validate(book)
+
 def get_all_books(db: Session) -> list[BookResponse]:
     books = books_repo.get_all_books(db)
     books = [BookResponse.model_validate(book) for book in books]
